@@ -190,7 +190,7 @@ type Details struct {
 	OverallSavingsMs    *float64                 `json:"overallSavingsMs"`
 	OverallSavingsBytes *int                     `json:"overallSavingsBytes"`
 	Summary             *struct {
-		WastedBytes int `json:"wastedBytes"`
+		WastedBytes float64 `json:"wastedBytes"`
 	} `json:"summary"`
 }
 
