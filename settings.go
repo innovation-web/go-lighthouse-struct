@@ -35,7 +35,7 @@ type ConfigSettings struct {
 	} `json:"throttling"`
 	AuditMode                            *bool    `json:"auditMode"`
 	GatherMode                           *bool    `json:"gatherMode"`
-	DisableStorageReset                  *bool    `json:"DisableStorageReset"`
+	DisableStorageReset                  *bool    `json:"disableStorageReset"`
 	EmulatedFormFactor                   *string  `json:"emulatedFormFactor"`
 	InternalDisableDeviceScreenEmulation *bool    `json:"internalDisableDeviceScreenEmulation"`
 	Channel                              *string  `json:"channel"`
