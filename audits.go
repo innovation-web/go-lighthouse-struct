@@ -296,7 +296,7 @@ type AuditMetrics struct {
 			EstimatedInputLatency            int     `json:"estimatedInputLatency"`
 			TotalBlockingTime                int     `json:"totalBlockingTime"`
 			MaxPotentialFID                  int     `json:"maxPotentialFID"`
-			CumulativeLayoutShift            int     `json:"cumulativeLayoutShift"`
+			CumulativeLayoutShift            float64 `json:"cumulativeLayoutShift"`
 			ObservedNavigationStart          int     `json:"observedNavigationStart"`
 			ObservedNavigationStartTs        int     `json:"observedNavigationStartTs"`
 			ObservedFirstPaint               int     `json:"observedFirstPaint"`
