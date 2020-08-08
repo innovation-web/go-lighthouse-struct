@@ -184,8 +184,8 @@ type Details struct {
 	Scale               *int                     `json:"scale"`
 	Headings            []AuditDetailsHeading    `json:"headings"`
 	Items               []map[string]interface{} `json:"items"`
-	Timing              *int                     `json:"timing"`
-	Timestamp           *int                     `json:"timestamp"`
+	Timing              *float64                 `json:"timing"`
+	Timestamp           *float64                 `json:"timestamp"`
 	Data                *string                  `json:"data"`
 	OverallSavingsMs    *float64                 `json:"overallSavingsMs"`
 	OverallSavingsBytes *int                     `json:"overallSavingsBytes"`
@@ -217,9 +217,9 @@ type AuditScreenshotThumbnails struct {
 		Type  string `json:"type"`
 		Scale int    `json:"scale"`
 		Items []struct {
-			Timing    int    `json:"timing"`
-			Timestamp int    `json:"timestamp"`
-			Data      string `json:"data"`
+			Timing    float64 `json:"timing"`
+			Timestamp float64 `json:"timestamp"`
+			Data      string  `json:"data"`
 		} `json:"items"`
 	} `json:"details"`
 }
@@ -227,10 +227,10 @@ type AuditScreenshotThumbnails struct {
 type AuditFinalScreenshot struct {
 	Audit
 	Details struct {
-		Type      string `json:"type"`
-		Timing    int    `json:"timing"`
-		Timestamp int    `json:"timestamp"`
-		Data      string `json:"data"`
+		Type      string  `json:"type"`
+		Timing    float64 `json:"timing"`
+		Timestamp float64 `json:"timestamp"`
+		Data      string  `json:"data"`
 	} `json:"details"`
 }
 
