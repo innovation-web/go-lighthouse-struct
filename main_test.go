@@ -15,22 +15,34 @@ func TestMain(m *testing.M) {
 
 func TestReport(t *testing.T) {
 	Convey("Unmarshal report", t, func() {
-		b, err := ioutil.ReadFile("report.json")
+		files, err := ioutil.ReadDir("test-data/reports")
 		So(err, ShouldBeNil)
-		var report *Report
-		err = json.Unmarshal(b, &report)
-		So(err, ShouldBeNil)
-		So(report, ShouldNotBeNil)
+		for _, f := range files {
+			Convey(f.Name(), func() {
+				b, err := ioutil.ReadFile("test-data/reports/" + f.Name())
+				So(err, ShouldBeNil)
+				var report *Report
+				err = json.Unmarshal(b, &report)
+				So(err, ShouldBeNil)
+				So(report, ShouldNotBeNil)
+			})
+		}
 	})
 }
 
 func TestDevtoolsLog(t *testing.T) {
 	Convey("Unmarshal devtools log", t, func() {
-		b, err := ioutil.ReadFile("devtoolslog.json")
+		files, err := ioutil.ReadDir("test-data/devtoolslogs")
 		So(err, ShouldBeNil)
-		var log []LogItem
-		err = json.Unmarshal(b, &log)
-		So(err, ShouldBeNil)
-		So(log, ShouldNotBeNil)
+		for _, f := range files {
+			Convey(f.Name(), func() {
+				b, err := ioutil.ReadFile("test-data/devtoolslogs/" + f.Name())
+				So(err, ShouldBeNil)
+				var log []LogItem
+				err = json.Unmarshal(b, &log)
+				So(err, ShouldBeNil)
+				So(log, ShouldNotBeNil)
+			})
+		}
 	})
 }
