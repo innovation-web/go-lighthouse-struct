@@ -145,6 +145,7 @@ type Audits struct {
 	Plugins                       *AuditDetails               `json:"plugins"`
 	Canonical                     *Audit                      `json:"canonical"`
 	StructuredData                *Audit                      `json:"structured-data"`
+	CustomAudits
 }
 
 const (
@@ -322,4 +323,9 @@ type AuditMetrics struct {
 			LcpInvalidated                   *bool   `json:"lcpInvalidated"`
 		}
 	} `json:"details"`
+}
+
+type CustomAudits struct {
+	FullSizeScreenshot *AuditFinalScreenshot `json:"fullsize-screenshot"`
+	VideoScreenCast    *AuditFinalScreenshot `json:"video-screencast"`
 }
