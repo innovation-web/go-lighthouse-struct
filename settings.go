@@ -25,7 +25,7 @@ type ConfigSettings struct {
 	MaxWaitForFcp    *int     `json:"maxWaitForFcp"`
 	MaxWaitForLoad   *int     `json:"maxWaitForLoad"`
 	ThrottlingMethod *string  `json:"throttlingMethod"`
-	Throttling       *struct {
+	Throttling       struct {
 		RttMs                  *int     `json:"rttMs"`
 		ThroughputKbps         *float64 `json:"throughputKbps"`
 		RequestLatencyMs       *float64 `json:"requestLatencyMs"`
