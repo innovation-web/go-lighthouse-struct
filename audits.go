@@ -160,19 +160,39 @@ const (
 	AuditDetailsTypeDebugData            = "debugdata"
 	AuditDetailsTypeOpportunity          = "opportunity"
 	AuditDetailsTypeCriticalRequestChain = "criticalrequestchain"
+
+	NumericUnitByte        = "byte"
+	NumericUnitMillisecond = "millisecond"
+	NumericUnitElement     = "element"
+	NumericUnitUnitless    = "unitless"
 )
 
 type Audit struct {
-	Id               string   `json:"id"`
-	Title            string   `json:"title"`
-	Description      string   `json:"description"`
-	Score            *float32 `json:"score"`
-	ScoreDisplayMode string   `json:"scoreDisplayMode"`
-	Warnings         []string `json:"warnings"`
-	Explanation      string   `json:"explanation"`
-	NumericValue     float64  `json:"numericValue"`
-	NumericUnit      string   `json:"numericUnit"`
-	DisplayValue     string   `json:"displayValue"`
+	/* The string identifier of the audit, in kebab case. */
+	Id string `json:"id"`
+	/* Short, user-visible title for the audit. The text can change depending on if the audit passed or failed. */
+	Title string `json:"title"`
+	/* A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
+	Description string `json:"description"`
+	/* The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
+	Score *float32 `json:"score"`
+	/* A string identifying how the score should be interpreted for display. */
+	ScoreDisplayMode string        `json:"scoreDisplayMode"`
+	Warnings         []interface{} `json:"warnings"`
+	/* An explanation of why the audit failed on the test page. */
+	Explanation interface{} `json:"explanation"`
+	/* A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
+	NumericValue float64 `json:"numericValue"`
+	/** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. A superset of https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier */
+	NumericUnit string `json:"numericUnit"`
+	/* The i18n'd string value that the audit wishes to display for its results. This value is not necessarily the string version of the `numericValue`. */
+	DisplayValue interface{} `json:"displayValue"`
+	/* Error message from any exception thrown while running this audit. */
+	ErrorMessage interface{} `json:"errorMessage"`
+	/* Overrides scoreDisplayMode with notApplicable if set to true */
+	NotApplicable *bool `json:"notApplicable"`
+	/* If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
+	RunWarnings []interface{} `json:"runWarnings"`
 }
 
 type AuditDetails struct {
@@ -180,25 +200,43 @@ type AuditDetails struct {
 	Details `json:"details"`
 }
 
+/* Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
 type Details struct {
-	Type                string                   `json:"type"`
-	Scale               *int                     `json:"scale"`
-	Headings            []AuditDetailsHeading    `json:"headings"`
-	Items               []map[string]interface{} `json:"items"`
-	Timing              *float64                 `json:"timing"`
-	Timestamp           *float64                 `json:"timestamp"`
-	Data                *string                  `json:"data"`
-	OverallSavingsMs    *float64                 `json:"overallSavingsMs"`
-	OverallSavingsBytes *int                     `json:"overallSavingsBytes"`
+	Type     string                   `json:"type"`
+	Scale    *int                     `json:"scale"`
+	Headings []AuditDetailsHeading    `json:"headings"`
+	Items    []map[string]interface{} `json:"items"`
+	/* The relative time from navigationStart to this frame, in milliseconds. */
+	Timing *float64 `json:"timing"`
+	/* The raw timestamp of this frame, in microseconds. */
+	Timestamp *float64 `json:"timestamp"`
+	/* The data URL encoding of this frame. */
+	Data                *string  `json:"data"`
+	OverallSavingsMs    *float64 `json:"overallSavingsMs"`
+	OverallSavingsBytes *int     `json:"overallSavingsBytes"`
 	Summary             *struct {
 		WastedBytes float64 `json:"wastedBytes"`
 	} `json:"summary"`
 }
 
 type AuditDetailsHeading struct {
-	Key      string `json:"key"`
+	/*
+		The name of the property within items being described.
+
+		If null, subItemsHeading must be defined, and the first table row in this column for
+		every item will be empty.
+
+		See legacy-javascript for an example.
+	*/
+	Key string `json:"key"`
+	/*
+		The data format of the column of values being described. Usually
+		those values will be primitives rendered as this type, but the values
+		could also be objects with their own type to override this field.
+	*/
 	ItemType string `json:"itemType"`
-	Text     string `json:"text"`
+	/* Readable text label of the field. */
+	Text interface{} `json:"text"`
 }
 
 type AuditChain struct {
